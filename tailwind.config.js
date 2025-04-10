@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sacramento: ['Sacramento', 'cursive'],
+        orbitron: ['Orbitron', 'sans-serif'],
       },
       colors: {
         'neon-pink': '#FF007F', // Adicione a cor rosa neon

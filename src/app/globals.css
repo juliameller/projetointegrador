@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
-/* BOTAR IMPORT EM PRIMEIRO FAZ APARECER A FONT*/
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
@@ -22,7 +21,7 @@ button.save:hover {
 
 
 button.Load {
-    font-family: 'Sacramento', cursive;
+    /* font-family: 'Sacramento', cursive; */
     font-size: 1.5rem;
     color: #fff;
     background-color: rgb(0, 255, 174);
@@ -39,7 +38,7 @@ button.Action {
     gap: 1rem;
     font-size: 1rem; 
     color: #fff;
-    background-color: #f55381; 
+    background-color: #5653f5; 
     padding: 0.5rem 2rem; 
     border-radius: 0.5rem;
     border: none;
@@ -48,7 +47,7 @@ button.Action {
 }
 
 .Action:hover {
-    background-color: #F582A2; 
+    background-color: #6d79e2; 
 }
 
 .menu-item {
@@ -63,15 +62,15 @@ button.Action {
 }
 
 .menu-item:hover {
-    background-color: #F582A2;
+    background-color: #6d79e2;
 }
 
 .menu-item .icon {
-    font-size: 2.5rem; 
+    font-size: 1.5rem; 
 }
 
 .menu-item.active {
-    background-color:  #f55381; 
+    background-color:  #6d79e2; 
 }
 
 
@@ -92,7 +91,7 @@ button.Action {
 
 .title {
     font-size: 3rem;
-    font-family: 'Sacramento', cursive;
+    font-family: 'Orbitron', sans-serif;
     margin-bottom: 1rem;
     font-weight: 700;
     color: #db2777;
