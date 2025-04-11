@@ -188,7 +188,7 @@ const DataTable = () => {
                 Cell: ({ row }) => (
                     <button
                         onClick={() => openEditModal(row.original)}
-                        className="text-white bg-pink-500 hover:bg-pink-600 rounded px-2 py-1"
+                        className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"
                     >
                         Editar
                     </button>

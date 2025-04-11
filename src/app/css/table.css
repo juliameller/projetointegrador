@@ -1,4 +1,4 @@
-
+/* 
 .custom-table {
     width: 100%;
     border-collapse: collapse;
@@ -30,14 +30,14 @@
 }
 
 /* Estilo das células da tabela */
-.custom-table-cell {
+/* .custom-table-cell {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #d1d5db;
     color: #374151;
-}
+} */
 
 /* Efeito de hover sobre as células */
-.custom-table-cell:hover {
+/* .custom-table-cell:hover {
     background-color: #f3f4f6;
     /* Cinza muito claro */
-}
+/*}  */

@@ -82,7 +82,7 @@ const Servicos = () => {
                     <h1 className="title">Serviços</h1>
                     <div className="flex items-center justify-between">
                         <SearchBar placeholder="Pesquisar Serviço..." />
-                        <button onClick={openModal} className="text-white bg-pink-500 hover:bg-pink-600 rounded px-2 py-1"> Novo Serviço </button>
+                        <button onClick={openModal} className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"> Novo Serviço </button>
                     </div>
                     <DataTable />
                 </div>

@@ -124,7 +124,7 @@ const Clientes = () => {
                         <SearchBar placeholder="Pesquisar Cliente..." />
                         <button 
                             onClick={openModal} 
-                            className="text-white bg-pink-500 hover:bg-pink-600 rounded px-2 py-1"
+                            className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"
                         >
                             Novo Cliente
                         </button>
@@ -140,16 +140,11 @@ const Clientes = () => {
                         <h2 className="title text-center">Cadastrar Cliente</h2>
                         <ClienteForm handleSubmit={handleSubmit} handleChange={handleChange} formData={formData} formErrors={formErrors} />
                         <div className="flex justify-between mt-4">
-                            <button 
-                                onClick={handleCancel} 
-                                className="Action bg-gray-500 hover:bg-gray-600 text-white rounded px-4 py-2"
-                            >
-                                Cancelar
-                            </button>
+                            <button onClick={handleCancel} className="Action">Cancelar</button>
                             <button 
                                 type="submit"
                                 form="clienteForm"
-                                className="text-white bg-pink-500 hover:bg-pink-600 rounded px-4 py-2"
+                                className="Action"
                             >
                                 Cadastrar Cliente
                             </button>
