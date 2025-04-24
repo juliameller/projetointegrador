@@ -26,10 +26,6 @@ const Sidebar = () => {
                             <FaConciergeBell className="icon" />
                             Serviços
                         </Link>
-                        <Link href="/ERP/Financeiro" className={`menu-item ${pathname === '/ERP/Financeiro' ? 'active' : ''}`}>
-                            <FaDollarSign className="icon" />
-                            Financeiro
-                        </Link>
                     </div>
                     <div className="mt-auto flex flex-col items-center justify-center gap-10">
                         <Link rel="stylesheet" href="/auth/login">
