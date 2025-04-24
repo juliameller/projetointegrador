@@ -22,7 +22,7 @@ const Clientes = () => {
         endereco: '',
         cpf: '',
         email: '',
-        nascimento: ''
+        veiculo: ''
     });
 
     const openSuccessModal = () => {
@@ -83,7 +83,7 @@ const Clientes = () => {
                     endereco: '',
                     cpf: '',
                     email: '',
-                    nascimento: ''
+                    veiculo: ''
                 });
                 setFormErrors({});
             } else {

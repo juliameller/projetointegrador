@@ -82,11 +82,11 @@ const ClienteForm = ({ handleSubmit, handleChange, formData = {}, formErrors = {
                 />
             </div>
             <div>
-                <label className="formlabel">Nascimento</label>
+                <label className="formlabel">Modelo do veículo</label>
                 <input
-                    type="date"
-                    name="nascimento"
-                    value={formData.nascimento || ''}
+                    type="text"
+                    name="veiculo"
+                    value={formData.veiculo || ''}
                     onChange={handleChange}
                     className="Custom-input"
                 />

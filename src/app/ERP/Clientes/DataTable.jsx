@@ -99,7 +99,7 @@ const DataTable = () => {
                 cpf: cleanCPF,
                 endereco: selectedCliente.endereco || '',
                 email: selectedCliente.email || '',
-                nascimento: selectedCliente.nascimento || null
+                veiculo: selectedCliente.veiculo || null
             };
     
             console.log('Payload sendo enviado:', clientePayload);
@@ -157,12 +157,7 @@ const DataTable = () => {
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     };
 
-    const formatNascimento = (nascimento) => {
-        if (!nascimento) return '';
-        const [year, month, day] = nascimento.split('-');
-        return `${day}/${month}/${year}`;
-    };
-
+    
     const columns = useMemo(
         () => [
             { Header: 'Nome', accessor: 'nome' },
@@ -176,11 +171,6 @@ const DataTable = () => {
                 Header: 'CPF',
                 accessor: 'cpf',
                 Cell: ({ value }) => formatCPF(value),
-            },
-            {
-                Header: 'Nascimento',
-                accessor: 'nascimento',
-                Cell: ({ value }) => formatNascimento(value),
             },
             {
                 Header: 'Ações',

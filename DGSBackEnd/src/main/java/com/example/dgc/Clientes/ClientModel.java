@@ -29,8 +29,8 @@ public class ClientModel {
     @Column(name = "email")
     private String email;
     
-    @Column(name = "nascimento")
-    private LocalDate nascimento;
+    @Column(name = "veiculo")
+    private String veiculo;
     
     @Column(name = "endereco")
     private String endereco;
@@ -75,12 +75,12 @@ public class ClientModel {
         this.email = email;
     }
 
-    public LocalDate getNascimento() {
-        return nascimento;
+    public String getVeiculo() {
+        return veiculo;
     }
 
-    public void setNascimento(LocalDate nascimento) {
-        this.nascimento = nascimento;
+    public void setVeiculo(String veiculo) {
+        this.veiculo = veiculo;
     }
 
     public String getEndereco() {

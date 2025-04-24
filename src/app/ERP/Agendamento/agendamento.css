@@ -1,5 +1,5 @@
 .calendariocontainer {
-    background-color: #FFE9EF;
+    background-color: #d0d1de;
     border-radius: 1rem;
     padding: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -21,7 +21,7 @@
 }
 
 .containerfilters {
-    background-color: #FFE9EF;
+    background-color: #d0d1de;
     align-items: center;
     margin: 10px;
     border-radius: 1rem;
@@ -41,66 +41,13 @@
     
 }
 
-
-
-/*
-
-.toolbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 20%;
-    min-width: 300px;
-    background-color: #f7b2b2;
-    border-left: 1px solid #bbb;
-    padding: 20px;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.main-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.toolbar-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: #f7cfcf;
-    padding: 16px;
-    border-bottom: 1px solid #f55381;
-}
-
-.mesAno {
-    width: 60%;
-    color: #333;
-    font-size: 28px;
-    font-weight: 500;
-}
-
-
-
-.dirtop {
-    width: 30%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 30px;
-}
-
-
-
-
 /* Header e Botoes do Calendário */
 
 .rbc-toolbar {
     background-color: #fff;
     padding: 10px;
     color: #333;
-    border-bottom: 2px solid #f55381;
+    border-bottom: 2px solid #1e3a8a;
     font-size: 20px;
     font-weight: bold;
 
@@ -109,16 +56,16 @@
 
 .rbc-toolbar-label {
     font-size: 30px;
-    color: #f55381;
+    color: #1e3a8a;
 }
 
 /* Botões */
 
 /* Estiliza os botões dentro do grupo de botões */
 .rbc-btn-group > button {
-    border: 1px solid #f55381 !important;
+    border: 1px solid #1e3a8a !important;
     background-color: transparent;
-    color: #f55381;
+    color: #1e3a8a;
     padding: 10px 15px;
     border-radius: 8px;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -126,7 +73,7 @@
 
 /* Estilo do botão normal */
 .rbc-toolbar button {
-    color: #f55381;
+    color: #1e3a8a;
     padding: 10px 15px;
     border-radius: 8px;
     transition: background-color 0.3s ease;
@@ -134,43 +81,43 @@
 
 /* Efeito de hover (quando passa o mouse sobre o botão) */
 .rbc-toolbar button:hover {
-    background-color: #ffe9ef;
-    color: #f55381;
+    background-color: #6d79e2;
+    color: #1e3a8a;
 }
 
 /* Estilo para o botão ativo (quando clicado) */
 .rbc-toolbar button:active,
 .rbc-toolbar button.rbc-active {
-    background-color: #f55381 !important;
-    color: #ffe9ef !important;
+    background-color: #1e3a8a !important;
+    color: #d0d1de !important;
     box-shadow: none;
 }
 
 /* Removendo estilo de hover no botão ativo */
 .rbc-toolbar button.rbc-active:hover {
-    background-color: #f55381 !important;
-    color: #ffe9ef !important;
+    background-color: #1e3a8a !important;
+    color: #d0d1de !important;
 }
 
 /* Garantindo que o botão ativo mantenha a cor */
 .rbc-btn-group > button:focus {
     outline: none;
-    background-color: #f55381 !important;
-    color: #ffe9ef !important;
+    background-color: #1e3a8a !important;
+    color: #d0d1de !important;
 }
 
 /* Manter a cor de fundo após o clique */
 .rbc-btn-group button.rbc-active {
-    background-color: #f55381 !important;
-    color: #ffe9ef !important;
+    background-color: #1e3a8a !important;
+    color: #d0d1de !important;
 }
 
 
 /* Cabeçalho dos Dias */
 .rbc-header {
-    color: #f55381;
+    color: #1e3a8a;
     font-size: 18px;
-    background-color: #ffe9ef;
+    background-color: #d0d1de;
     border: none !important; /* Remove qualquer borda */
     padding: 10px;
     border-radius: 15px;
@@ -182,7 +129,7 @@
 .rbc-button-link{
     font-size: 16px; /* Ajuste o tamanho da fonte */
     font-weight: bold; /* Deixa o número mais destacado */
-    color: #f55381; /* Cor do número */
+    color: #1e3a8a; /* Cor do número */
     padding: 5px;
     margin: 10px;
     background-color: #ffffff;
@@ -213,7 +160,7 @@
 /* Marcação todos os dias */
 .rbc-day-bg {
     border-radius: 15px;
-    border: solid 1px #f38ba8;
+    border: solid 1px #6d79e2;
     margin: 4px;
     background-color: #fff; /* Adicione um fundo se necessário para visualizar a borda */
     box-sizing: border-box; /* Garante que a borda e a margem não afetem o tamanho do elemento */
@@ -223,12 +170,12 @@
 /* Linhas verticais */
 .rbc-day-bg + .rbc-day-bg {
     border-radius: 15px;
-    border: solid 1px #f38ba8;;
+    border: solid 1px #6d79e2;;
 }
 
 /* Marcação dia atual */
 .rbc-today {
-    background-color: #f38ba86e;
+    background-color: #6d79e2;
     border-radius: 15px;
 }
 
@@ -249,7 +196,7 @@
 /* Agenda */
 
 .rbc-agenda-view {
-    color: #f55381;
+    color: #1e3a8a;
 }
 
 
@@ -265,7 +212,7 @@
 
 .rbc-agenda-event-cell {
     border-radius: 12px;
-    background-color: #ffe9ef;
+    background-color: #d0d1de;
     font-weight: bold;
     padding: 10px;
     transition: background-color 0.3s ease;
@@ -285,7 +232,7 @@
 }
 
 .rbc-time-view .rbc-header{
-    background-color: #ffe9ef;
+    background-color: #d0d1de;
     padding: 1px;
     border-radius: 15px;
     box-shadow: none; /* Remove qualquer sombra */;
@@ -296,7 +243,7 @@
 
 /* Modifica o elemento de dia atual */
 .rbc-time-view .rbc-header + .rbc-today{
-    background-color: #f38ba86e;
+    background-color: #d0d1de;
     padding: 1px;
     border-radius: 15px;
     box-shadow: none; /* Remove qualquer sombra */;
@@ -308,7 +255,7 @@
 }
 
 .rbc-time-view .rbc-button-link{
-    color: #f55381;
+    color: #1e3a8a;
     border-radius: 0px;
     background-color: transparent;
     border: none;
@@ -316,7 +263,7 @@
 
 
 .rbc-current-time-indicator {
-    background-color: #f55381; /* Cor da linha */
+    background-color: #1e3a8a; /* Cor da linha */
     height: 3px; /* Espessura da linha */
     z-index: 1000; /* Certifique-se de que está acima de outros elementos */
 }
@@ -352,10 +299,11 @@
 
 /* Altera as linhas de grade da agenda diária */
 .rbc-timeslot-group {
-    border-right: 1px solid rgba(255, 0, 76, 0.135); /* Borda lateral mais sutil */
-    border-bottom: 1px solid rgba(255, 0, 76, 0.135); /* Borda inferior mais sutil */
+    border-right: 1px solid rgba(30, 58, 138, 0.1); /* Borda lateral mais sutil */
+    border-bottom: 1px solid rgba(30, 58, 138, 0.1); /* Borda inferior mais sutil */
     height: 2.5rem; /* Altura de cada linha */
 }
+
 
 /* Personaliza o horário no início de cada linha */
 .rbc-timeslot-group .rbc-label {

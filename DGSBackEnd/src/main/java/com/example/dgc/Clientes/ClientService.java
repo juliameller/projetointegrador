@@ -25,7 +25,7 @@ public class ClientService {
         clienteExistente.setTelefone(cliente.getTelefone());
         clienteExistente.setEndereco(cliente.getEndereco());
         clienteExistente.setCpf(cliente.getCpf());
-        clienteExistente.setNascimento(cliente.getNascimento());
+        clienteExistente.setVeiculo(cliente.getVeiculo());
         return clienteRepository.save(clienteExistente);
     }
 

@@ -6,20 +6,20 @@
 
 /* Estilo do fundo da barra de rolagem */
 ::-webkit-scrollbar-track {
-    background: #ffe6eb; /* Rosa claro para o fundo da barra */
+    background: #d0d1de; /* Azul claro para o fundo da barra */
     border-radius: 10px; /* Borda arredondada */
 }
 
 /* Estilo do "polegar" da barra de rolagem */
 ::-webkit-scrollbar-thumb {
-    background: white; /* Cor padrão rosa */
+    background: #1e3a8a; /* Azul escuro para o "polegar" */
     border-radius: 10px; /* Borda arredondada */
-    border: 2px solid #ffe6eb; /* Borda clara */
+    border: 2px solid #d0d1de; /* Borda clara, mais suave que o fundo */
 }
 
 /* Estilo do "polegar" da barra de rolagem ao passar o mouse */
 ::-webkit-scrollbar-thumb:hover {
-    background: #d9466a; /* Um tom mais escuro para destacar ao passar o mouse */
+    background: #6d79e2; /* Azul mais claro para destacar ao passar o mouse */
 }
 
 /* Personalizando a barra de rolagem para elementos específicos */
@@ -28,14 +28,11 @@
 }
 
 .custom-scrollbar ::-webkit-scrollbar-thumb {
-    background: #f55381;
+    background: #1e3a8a; 
     border-radius: 10px;
-    border: 2px solid #ffe6eb;
+    border: 2px solid #d0d1de; 
 }
 
 .custom-scrollbar ::-webkit-scrollbar-track {
-    background: #ffe6eb;
+    background: #d0d1de; 
 }
-
-
-
