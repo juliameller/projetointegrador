@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata = {
-  title: "Daros GlowCare",
+  title: "T-Solution",
   description: "Agendament system calendar controller",
 };
 
