@@ -3,25 +3,25 @@
     max-width: 100%;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    table-layout: fixed; /* Define uma largura fixa para as colunas */
+    table-layout: fixed; 
 }
 
 .table-container {
     margin-top: 1%;
-    max-height: 70vh;    /* Tamanho fixo para o corpo da tabela */
-    border-radius: 8px;   /* Aplica o border-radius ao contêiner da tabela */
-    border: 1px solid #e5e7eb; /* Adiciona a borda ao contêiner */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra na tabela */
+    max-height: 70vh;    
+    border-radius: 8px;   
+    border: 1px solid #e5e7eb; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
     overflow: auto;
-    overflow-x: auto; /* Permite rolagem horizontal se necessário */
+    overflow-x: auto; 
 }
 
 .custom-table-header {
     background-color: #1e3a8a;
     color: #ffffff;
-    position: sticky;     /* Torna o cabeçalho fixo */
-    top: 0;               /* Fixa no topo */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra no cabeçalho */
+    position: sticky;     
+    top: 0;              
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .custom-table-header-cell {
@@ -42,9 +42,9 @@
     padding: 1rem;
     border-bottom: 1px solid #d1d5db;
     color: #374151;
-    white-space: nowrap; /* Impede quebra de linha */
-    overflow: hidden; /* Esconde o conteúdo que ultrapassa os limites */
-    text-overflow: ellipsis; /* Adiciona "..." quando o texto é cortado */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 

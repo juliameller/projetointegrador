@@ -1,6 +1,8 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
-import { FaUsers, FaCalendarAlt, FaDollarSign, FaConciergeBell, FaSignOutAlt } from 'react-icons/fa';
+import { FaUsers, FaCalendarAlt, FaRobot, FaConciergeBell, FaSignOutAlt } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 // import logo from '../../assets/LOGO.png';
@@ -25,6 +27,10 @@ const Sidebar = () => {
                         <Link href="/ERP/Servicos" className={`menu-item ${pathname === '/ERP/Servicos' ? 'active' : ''}`}>
                             <FaConciergeBell className="icon" />
                             Serviços
+                        </Link>
+                        <Link href="/ERP/Chatbot" className={`menu-item ${pathname === '/ERP/Chatbot' ? 'active' : ''}`}>
+                            <FaRobot className="icon" />
+                            Chatbot
                         </Link>
                     </div>
                     <div className="mt-auto flex flex-col items-center justify-center gap-10">
