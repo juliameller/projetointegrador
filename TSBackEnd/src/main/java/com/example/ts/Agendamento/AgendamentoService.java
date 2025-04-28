@@ -24,13 +24,18 @@ public class AgendamentoService {
     @Autowired
     private ClientService clientService;
 
-    public AgendamentoModel agendar(Long id_cliente, Long id_servico, LocalDateTime dataInicial, 
+    public AgendamentoModel agendar(Long id_cliente, List<Long> id_servicos, LocalDateTime dataInicial,
     LocalDateTime dataFinal, Integer status) {
     Optional<ClientModel> cliente = clientService.buscarPorId(id_cliente);
-    Optional<ServicosModel> servico = servicoRepository.findById(id_servico);
 
-    if (cliente.isEmpty() || servico.isEmpty()) {
-    throw new RuntimeException("Cliente ou Serviço não encontrado");
+    if (cliente.isEmpty()) {
+    throw new RuntimeException("Cliente não encontrado");
+    }
+
+    // Carregar os serviços usando os IDs fornecidos
+    List<ServicosModel> servicos = servicoRepository.findAllById(id_servicos);
+    if (servicos.isEmpty()) {
+        throw new RuntimeException("Serviços não encontrados");
     }
 
     List<AgendamentoModel> agendamentos = agendamentoRepository.findByDataInicial(dataInicial);
@@ -40,7 +45,7 @@ public class AgendamentoService {
 
     AgendamentoModel agendamento = new AgendamentoModel();
     agendamento.setCliente(cliente.get());
-    agendamento.setServico(servico.get());
+    agendamento.setServicos(servicos);
     agendamento.setDataInicial(dataInicial);
     agendamento.setDataFinal(dataFinal);
     agendamento.setStatus(status);  // Agora o status está sendo usado
@@ -52,7 +57,7 @@ public class AgendamentoService {
         return agendamentoRepository.findAll();
     }
 
-    public AgendamentoModel atualizar(Long id, Long id_cliente, Long id_servico, LocalDateTime dataInicial, LocalDateTime dataFinal, Integer status) {
+    public AgendamentoModel atualizar(Long id, Long id_cliente, List<Long> id_servicos, LocalDateTime dataInicial, LocalDateTime dataFinal, Integer status) {
         Optional<AgendamentoModel> agendamentoExistente = agendamentoRepository.findById(id);
     
         if (agendamentoExistente.isEmpty()) {
@@ -60,10 +65,13 @@ public class AgendamentoService {
         }
     
         Optional<ClientModel> cliente = clientService.buscarPorId(id_cliente);
-        Optional<ServicosModel> servico = servicoRepository.findById(id_servico);
-    
-        if (cliente.isEmpty() || servico.isEmpty()) {
-            throw new RuntimeException("Cliente ou Serviço não encontrado");
+        if (cliente.isEmpty()) {
+            throw new RuntimeException("Cliente não encontrado");
+        }
+
+        List<ServicosModel> servicos = servicoRepository.findAllById(id_servicos);
+        if (servicos.isEmpty()) {
+            throw new RuntimeException("Um ou mais serviços não encontrados");
         }
     
         List<AgendamentoModel> agendamentos = agendamentoRepository.findByDataInicial(dataInicial)
@@ -77,7 +85,7 @@ public class AgendamentoService {
     
         AgendamentoModel agendamento = agendamentoExistente.get();
         agendamento.setCliente(cliente.get());
-        agendamento.setServico(servico.get());
+        agendamento.setServicos(servicos);
         agendamento.setDataInicial(dataInicial);
         agendamento.setDataFinal(dataFinal);
         agendamento.setStatus(status);

@@ -7,12 +7,9 @@ function Adicionar({ onAdicionar }) {
             id: '',
             nome: ''
         },
-        servico: {
-            idServico: '',
-            nome: '',
-            duracao: ''
-        },
+        servicos: [],
         dataHora: '',
+        dataHoraFinal: '',
     });
     const [expanded, setExpanded] = useState(false);
     const [clientes, setClientes] = useState([]);
@@ -66,52 +63,58 @@ function Adicionar({ onAdicionar }) {
                     : { id: '', nome: '' }
             }));
         } 
-        else if (name === 'servico') {
-            const selectedService = servicos.find(s => s.idServico === parseInt(value));
-            console.log('Serviço selecionado:', selectedService);
+       
+        else if (name === 'dataHora' || name === 'dataHoraFinal') {
             setNovoEvento(prev => ({
                 ...prev,
-                servico: selectedService 
-                    ? { 
-                        idServico: selectedService.idServico,
-                        nome: selectedService.nome,
-                        valor: selectedService.valor,
-                        duracao: selectedService.duracao
-                    }
-                    : { idServico: '', nome: '', duracao: '' }
-            }));
-        }
-        else if (name === 'dataHora') {
-            setNovoEvento(prev => ({
-                ...prev,
-                dataHora: value
+                [name]: value
             }));
         }
     };
 
-    // Função para calcular a data final baseada na duração do serviço
-    const calcularDataFinal = (dataInicial, duracao) => {
-        const [horas, minutos] = duracao.split(':').map(Number);
-        const dataFinal = new Date(dataInicial);
-        dataFinal.setHours(dataFinal.getHours() + horas);
-        dataFinal.setMinutes(dataFinal.getMinutes() + minutos);
-        return dataFinal;
+    const handleServicoChange = (e, servico) => {
+        const { checked } = e.target;
+    
+        setNovoEvento(prev => {
+            if (checked) {
+                // Adiciona serviço
+                return {
+                    ...prev,
+                    servicos: [...prev.servicos, servico]
+                };
+            } else {
+                // Remove serviço
+                return {
+                    ...prev,
+                    servicos: prev.servicos.filter(s => s.idServico !== servico.idServico)
+                };
+            }
+        });
     };
+    
 
     // Função para formatar a data no formato esperado pela API
     const formatarData = (data) => {
         return data.toISOString().slice(0, 19);
     };
 
+    // Função para ajustar a data e hora para o fuso horário local
+    const ajustarDataHora = (dataHora) => {
+        const data = new Date(dataHora);
+        const fusoHorario = data.getTimezoneOffset(); // Obtém a diferença de fuso horário em minutos
+        data.setMinutes(data.getMinutes() - fusoHorario); // Ajusta para o horário local
+        return data;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const dataInicial = new Date(novoEvento.dataHora);
-            const dataFinal = calcularDataFinal(dataInicial, novoEvento.servico.duracao);
+            const dataInicial = ajustarDataHora(new Date(novoEvento.dataHora));
+            const dataFinal = ajustarDataHora(new Date(novoEvento.dataHoraFinal));
 
             const agendamentoData = {
                 id_cliente: parseInt(novoEvento.cliente.id),
-                id_servico: parseInt(novoEvento.servico.idServico),
+                id_servicos:  novoEvento.servicos.map(s => s.idServico),
                 dataInicial: formatarData(dataInicial),
                 dataFinal: formatarData(dataFinal),
                 status: 1
@@ -135,7 +138,7 @@ function Adicionar({ onAdicionar }) {
             const responseData = await response.json();
 
             const eventoCalendario = {
-                title: `${novoEvento.cliente.nome} - ${novoEvento.servico.nome}`,
+                title: `${novoEvento.cliente.nome} - ${responseData.servicos.map(s => s.nome).join(', ')}`,
                 start: dataInicial,
                 end: dataFinal,
                 resource: responseData
@@ -146,8 +149,9 @@ function Adicionar({ onAdicionar }) {
             // Reset form
             setNovoEvento({
                 cliente: { id: '', nome: '' },
-                servico: { idServico: '', nome: '', duracao: '' },
-                dataHora: ''
+                servicos: [],
+                dataHora: '',
+                dataHoraFinal: '',
             });
 
             alert('Agendamento salvo com sucesso!');
@@ -193,26 +197,32 @@ function Adicionar({ onAdicionar }) {
                         required
                     />
                 </Form.Group>
+                <Form.Group controlId="formBasicEndDateTime" className="mb-3">
+                    <Form.Label className="formlabel">Data e Hora Final</Form.Label>
+                    <Form.Control
+                        type="datetime-local"
+                        name="dataHoraFinal"
+                        className="Custom-input"
+                        value={novoEvento.dataHoraFinal}
+                        onChange={handleChange}
+                        required
+                    />
+                </Form.Group>
+
 
                 <Form.Group controlId="formBasicService" className="mb-3">
                     <Form.Label className="formlabel">Tipo de Serviço</Form.Label>
-                    <Form.Select
-                        name="servico"
-                        className="Custom-input"
-                        value={novoEvento.servico.idServico}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="">Selecione um serviço</option>
-                        {servicos.map(servico => (
-                            <option 
-                                key={`servico-${servico.idServico}`} 
-                                value={servico.idServico}
-                            >
-                                {servico.nome} - R$ {servico.valor.toFixed(2)} - {servico.duracao}
-                            </option>
+                    {servicos.map(servico => (
+                        <Form.Check 
+                            key={`servico-${servico.idServico}`}
+                            type="checkbox"
+                            // label={`${servico.nome} (R$ ${servico.valor.toFixed(2)})`}
+                            label={`${servico.nome}`}
+                            value={servico.idServico}
+                            checked={novoEvento.servicos.some(s => s.idServico === servico.idServico)}
+                            onChange={(e) => handleServicoChange(e, servico)}
+                        />
                         ))}
-                    </Form.Select>
                 </Form.Group>
 
                 <Button
@@ -229,7 +239,8 @@ function Adicionar({ onAdicionar }) {
                         variant="success"
                         type="submit"
                         className="save"
-                        disabled={!novoEvento.cliente.id || !novoEvento.servico.idServico || !novoEvento.dataHora}
+                        disabled={!novoEvento.cliente.id || novoEvento.servicos.length === 0 || !novoEvento.dataHora || !novoEvento.dataHoraFinal}
+
                     >
                         Salvar
                     </Button>

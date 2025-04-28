@@ -54,22 +54,41 @@ INSERT INTO servico (nome, valor, duracao) VALUES
 CREATE TABLE agenda (
   id_agenda SERIAL PRIMARY KEY,
   id_cliente INTEGER NOT NULL,
-  id_servico INTEGER NOT NULL,
   data_inicial TIMESTAMP NOT NULL,
   data_final TIMESTAMP NOT NULL,
   status INTEGER NOT NULL,
-  FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
-  FOREIGN KEY (id_servico) REFERENCES servico (id_servico)
+  FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente)
 );
 
-INSERT INTO agenda (id_cliente, id_servico, data_inicial, data_final, status) VALUES
-(1, 1, '2025-04-25 08:00:00', '2025-04-25 09:00:00', 0),
-(2, 4, '2025-04-25 09:30:00', '2025-04-25 15:30:00', 0),
-(3, 2, '2025-04-26 08:00:00', '2025-04-26 12:00:00', 0),
-(4, 5, '2025-04-26 13:00:00', '2025-04-26 15:00:00', 0),
-(5, 3, '2025-04-27 10:00:00', '2025-04-27 11:30:00', 0),
-(6, 6, '2025-04-28 09:00:00', '2025-04-28 10:00:00', 0),
-(7, 8, '2025-04-28 13:00:00', '2025-04-28 16:00:00', 0),
-(8, 7, '2025-04-29 08:00:00', '2025-04-29 09:30:00', 0),
-(9, 10, '2025-04-30 11:00:00', '2025-04-30 13:00:00', 0),
-(10, 9, '2025-05-02 10:00:00', '2025-05-02 12:30:00', 0);
+INSERT INTO agenda (id_cliente, data_inicial, data_final, status) VALUES
+(1, '2025-04-25 08:00:00', '2025-04-25 09:00:00', 1),
+(2, '2025-04-25 09:30:00', '2025-04-25 15:30:00', 1),
+(3, '2025-04-26 08:00:00', '2025-04-26 12:00:00', 1),
+(4, '2025-04-26 13:00:00', '2025-04-26 15:00:00', 1),
+(5, '2025-04-27 10:00:00', '2025-04-27 11:30:00', 1),
+(6, '2025-04-28 09:00:00', '2025-04-28 10:00:00', 1),
+(7, '2025-04-28 13:00:00', '2025-04-28 16:00:00', 1),
+(8, '2025-04-29 08:00:00', '2025-04-29 09:30:00', 1),
+(9, '2025-04-30 11:00:00', '2025-04-30 13:00:00', 1),
+(10, '2025-05-02 10:00:00', '2025-05-02 12:30:00', 1);
+
+
+CREATE TABLE agendamento_servicos (
+    id_agenda BIGINT NOT NULL,
+    id_servico BIGINT NOT NULL,
+    PRIMARY KEY (id_agenda, id_servico),
+    CONSTRAINT fk_agenda FOREIGN KEY (id_agenda) REFERENCES agenda(id_agenda),
+    CONSTRAINT fk_servico FOREIGN KEY (id_servico) REFERENCES servico(id_servico)
+);
+
+INSERT INTO agendamento_servicos (id_agenda, id_servico) VALUES
+(1, 1),
+(2, 4),
+(3, 2),
+(4, 5),
+(5, 3),
+(6, 6),
+(7, 8),
+(8, 7),
+(9, 10),
+(10, 9);

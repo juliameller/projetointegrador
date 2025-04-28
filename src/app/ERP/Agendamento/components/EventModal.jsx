@@ -6,6 +6,8 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     const [editedEvent, setEditedEvent] = useState({ ...evento });
     const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
 
+    console.log('Evento selecionado no modal:', editedEvent.resource);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setEditedEvent({ ...editedEvent, [name]: value });
@@ -33,7 +35,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     const adjustDate = (date) => {
         const adjustedDate = new Date(date);
         adjustedDate.setHours(adjustedDate.getHours() - 3);
-        return adjustedDate.toISOString().slice(0, -8);
+        return adjustedDate.toISOString().slice(0, 19);
     };
 
     const handleEventDelete = async (event) => {
@@ -76,7 +78,16 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                     </div>
                     <div className="mb-4">
                         <label className="formlabel block text-gray-700">Tipo:</label>
-                        <p className="mt-1 w-full border rounded px-3 py-2 bg-gray-100">{editedEvent.tipo}</p>
+                        <p className="mt-1 w-full border rounded px-3 py-2 bg-gray-100">
+                        {editedEvent.resource && Array.isArray(editedEvent.resource.servicos) && editedEvent.resource.servicos.length > 0
+                        ? editedEvent.resource.servicos.map((servico, index) => (
+                            <span key={index}>
+                                {servico.nome}
+                                {index < editedEvent.resource.servicos.length - 1 && ', '} {/* Adiciona uma vírgula entre os nomes, exceto no último */}
+                            </span>
+                        ))
+                        : 'Tipo não encontrado'}
+                        </p>
                     </div>
                     <div className="mb-4 flex justify-between">
                         <div className="w-1/2 pr-2">
@@ -94,7 +105,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="time"
                                 name="start"
-                                value={adjustDate(editedEvent.start).slice(11)}
+                                value={adjustDate(editedEvent.start).slice(11, 16)}
                                 onChange={handleStartDateChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
@@ -104,11 +115,20 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="time"
                                 name="end"
-                                value={adjustDate(editedEvent.end).slice(11)}
+                                value={adjustDate(editedEvent.end).slice(11, 16)}
                                 onChange={handleEndDateChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
                         </div>
+                    </div>
+                    <div className="mb-4">
+                        <label className="formlabel block text-gray-700">Observações:</label>
+                        <textarea
+                            name="observacoes"
+                            value={editedEvent.observacoes || ''} 
+                            onChange={handleInputChange}
+                            className="mt-1 w-full border rounded px-3 py-2"
+                        />
                     </div>
                 </div>
                 <div className="flex justify-between mt-4">

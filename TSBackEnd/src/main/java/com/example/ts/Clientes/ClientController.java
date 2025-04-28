@@ -20,26 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     @Autowired
-    private ClientService ClientService;
+    private ClientService clientService;
 
     @GetMapping
     public List<ClientModel> listarTodos() {
-        return ClientService.listarTodos();
+        return clientService.listarTodos();
     }
 
     @PostMapping
     public ClientModel salvar(@RequestBody ClientModel cliente) {
-        return ClientService.salvar(cliente);
+        return clientService.salvar(cliente);
     }
 
     @PutMapping("/{id}")
     public ClientModel atualizar(@PathVariable Long id, @RequestBody ClientModel cliente) {
-        return ClientService.atualizar(id, cliente);
+        return clientService.atualizar(id, cliente);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        ClientService.deletar(id);
+        clientService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 }

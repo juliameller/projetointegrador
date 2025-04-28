@@ -30,18 +30,20 @@ function Agendamento() {
         try {
             setLoading(true);
             const response = await axios.get('http://localhost:8080/agendamento');
-            
+            // console.log('Resposta da API:', response.data);
+
             const eventosFormatados = response.data.map(agendamento => {
                 const startDate = moment(agendamento.dataInicial).tz('America/Sao_Paulo', true).toDate();
                 const endDate = moment(agendamento.dataFinal).tz('America/Sao_Paulo', true).toDate();
+
                 
                 return {
                     id: agendamento.id_agendamento,
-                    title: `${agendamento.cliente.nome}`,
+                    title: agendamento.clienteNome,
                     start: startDate,
                     end: endDate,
                     resource: agendamento,
-                    tipo: agendamento.servico.nome
+                    tipo: agendamento.servicos.nome
                 };
             });
             

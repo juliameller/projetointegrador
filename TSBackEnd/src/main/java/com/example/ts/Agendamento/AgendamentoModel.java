@@ -1,18 +1,12 @@
 package com.example.ts.Agendamento;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.example.ts.Clientes.ClientModel;
 import com.example.ts.Servicos.ServicosModel;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "agenda")  // Alterado para usar a tabela agenda
@@ -27,9 +21,13 @@ public class AgendamentoModel {
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private ClientModel cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_servico", referencedColumnName = "id_servico")
-    private ServicosModel servico;
+    @ManyToMany
+    @JoinTable(
+            name = "agendamento_servicos",
+            joinColumns = @JoinColumn(name = "id_agenda"),
+            inverseJoinColumns = @JoinColumn(name = "id_servico")
+    )
+    private List<ServicosModel> servicos;
 
     @Column(name = "data_inicial")  // Alterado para usar data_inicial
     private LocalDateTime dataInicial;
@@ -39,6 +37,8 @@ public class AgendamentoModel {
 
     @Column(name = "status")        // Adicionado status
     private Integer status;
+
+
 
     // Getters e Setters atualizados
     public Long getId() {
@@ -57,12 +57,12 @@ public class AgendamentoModel {
         this.cliente = cliente;
     }
 
-    public ServicosModel getServico() {
-        return servico;
+    public List<ServicosModel> getServicos() {
+        return servicos;
     }
 
-    public void setServico(ServicosModel servico) {
-        this.servico = servico;
+    public void setServicos(List<ServicosModel> servicos) {
+        this.servicos = servicos;
     }
 
     public LocalDateTime getDataInicial() {

@@ -53,7 +53,7 @@ public class AgendamentoController {
     
             AgendamentoModel agendamento = agendamentoService.agendar(
                 agendamentoRequest.getId_cliente(),
-                agendamentoRequest.getId_servico(),
+                agendamentoRequest.getId_servicos(),
                 dataInicial,
                 dataFinal,
                 status
@@ -68,9 +68,22 @@ public class AgendamentoController {
         }
     }
     @GetMapping
-    public List<AgendamentoModel> listarTodos() {
-        return agendamentoService.listarTodos();
+    public List<AgendamentoResponse> listarTodos() {
+        List<AgendamentoModel> agendamentos = agendamentoService.listarTodos();
+
+        return agendamentos.stream().map(agendamento -> {
+            AgendamentoResponse response = new AgendamentoResponse();
+            response.setId(agendamento.getId());
+            response.setIdCliente(agendamento.getCliente().getId());
+            response.setClienteNome(agendamento.getCliente().getNome());
+            response.setServicos(agendamento.getServicos());
+            response.setDataInicial(agendamento.getDataInicial());
+            response.setDataFinal(agendamento.getDataFinal());
+            response.setStatus(agendamento.getStatus());
+            return response;
+        }).toList();
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<AgendamentoModel> atualizar(
@@ -84,7 +97,7 @@ public class AgendamentoController {
             AgendamentoModel agendamento = agendamentoService.atualizar(
                 id,
                 agendamentoRequest.getId_cliente(),
-                agendamentoRequest.getId_servico(),
+                agendamentoRequest.getId_servicos(),
                 dataInicialParsed,
                 dataFinalParsed,
                 agendamentoRequest.getStatus()
@@ -93,7 +106,8 @@ public class AgendamentoController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
-    }    
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
