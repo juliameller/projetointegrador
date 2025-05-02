@@ -1,48 +1,110 @@
-# T-Solution
-- Projeto integrador: Inteligência Artificial
+# 🌐 T-Solution
 
-## Como rodar o projeto
+Projeto Integrador da disciplina de Inteligência Artificial, composto por uma aplicação fullstack com backend em Java (Spring Boot) e frontend em JavaScript (Node + React). O sistema integra conceitos modernos de desenvolvimento web e inteligência artificial, com persistência de dados utilizando PostgreSQL.
 
-### Pré-requisitos
+---
 
-- Editor de Código
-- Postgres
-- Node
-- Npm
-- Java
-- Maven
-- SpringBoot
+## 🛠️ Tecnologias Utilizadas
 
-### Banco de dados (Postgres)
+* **Backend**: Java, Spring Boot, Maven
+* **Frontend**: Node.js, React, Vite
+* **Banco de Dados**: PostgreSQL
+* **Gerenciamento de Dependências**: NPM & Maven
 
-- Abra o postgres no PgAdmin e crie um server, defina uma `senha` e crie um banco de dados chamado preferencialmente de `TS`, após a criação clique com o botão direito > QueryTool, no editor de código cole o texto do arquivo `SQL\DDL.sql` deste repositório e execute o mesmo.
+---
 
-O Script fará a criação dos dados iniciais bem como as tabelas e relacionamentos
+## ✨ Como Rodar o Projeto
 
-### Back-End (Java)
+### 1. Pré-requisitos
 
-- Configure o banco no arquivo localizado em `TSBackEnd\src\main\resources\application.properties` deste repositorio, nele virão os dados abaixo como padrão:
+Certifique-se de que as seguintes ferramentas estão instaladas em sua máquina:
 
-```java
-spring.application.name=TS /*Nome do Banco*/
-spring.datasource.url=jdbc:postgresql://localhost:5432/DGC /*Configuração padrão de localhost postgres + Nome do banco*/
-spring.datasource.username=postgres /*Nome de usuário padrão postgres*/
-spring.datasource.password=admin /*Senha criada por você no inicio da criação do banco de dados postgres*/
+* [Node.js](https://nodejs.org/)
+* [NPM](https://www.npmjs.com/)
+* [Java JDK 17+](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+* [Maven](https://maven.apache.org/)
+* [PostgreSQL](https://www.postgresql.org/)
+* Editor de Código (como VS Code ou IntelliJ)
+
+---
+
+### 2. Banco de Dados (PostgreSQL)
+
+1. Acesse o **PgAdmin** e crie um **servidor**.
+2. Crie uma **senha** e um banco de dados com o nome `TS` (ou outro de sua preferência).
+3. Clique com o botão direito no banco criado > **Query Tool**.
+4. Cole e execute o script presente em:
+   `SQL/DDL.sql`
+5. Esse script irá criar as tabelas, relacionamentos e dados iniciais automaticamente.
+
+---
+
+### 3. Backend (Spring Boot)
+
+1. Acesse a pasta `TSBackEnd` no seu editor de código.
+2. Edite o arquivo `src/main/resources/application.properties` para refletir os dados do seu banco:
+
+```properties
+spring.application.name=TS
+spring.datasource.url=jdbc:postgresql://localhost:5432/TS
+spring.datasource.username=postgres
+spring.datasource.password=admin
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-
 ```
 
-- Rode o TSAplication.java com o seu editor de código o mesmo está localizado no seguinte caminho
+3. Execute a classe `TSApplication.java`, localizada em:
 
- `TSBackEnd/src/java/com/example/dgc/TSApplication`
+```
+TSBackEnd/src/main/java/com/example/dgc/TSApplication.java
+```
 
+> A aplicação será iniciada por padrão na porta `8080`.
 
-### Front-End
+---
 
-- Na pastas raiz do projeto rode o comando abaixo em um novo terminal do editor de código
+### 4. Frontend (React + Vite)
 
-`npm run dev`
+1. Acesse o diretório raiz do projeto onde está o frontend.
+2. Execute o comando abaixo para instalar as dependências:
 
+```bash
+npm install
+```
 
+3. Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+---
+
+## ✅ Observações
+
+* Certifique-se de que o backend esteja rodando antes de iniciar o frontend.
+* A aplicação se conecta ao backend por padrão em `http://localhost:8080`.
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+TSBackEnd/
+├── src/
+│   └── main/
+│       └── java/com/example/dgc/
+│           └── TSApplication.java
+└── resources/
+        └── application.properties
+
+TSFrontEnd/
+├── node_modules/
+├── public/
+├── src/
+└── package.json
+
+SQL/
+└── DDL.sql
+```
 
