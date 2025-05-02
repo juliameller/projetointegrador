@@ -30,7 +30,7 @@ Certifique-se de que as seguintes ferramentas estão instaladas em sua máquina:
 
 ### 2. Banco de Dados (PostgreSQL)
 
-1. Acesse o **PgAdmin** e crie um **servidor**.
+1. Acesse o **PgAdmin** e crie um **servidor** apontando para o `localhost`.
 2. Crie uma **senha** e um banco de dados com o nome `TS` (ou outro de sua preferência).
 3. Clique com o botão direito no banco criado > **Query Tool**.
 4. Cole e execute o script presente em:
@@ -45,10 +45,10 @@ Certifique-se de que as seguintes ferramentas estão instaladas em sua máquina:
 2. Edite o arquivo `src/main/resources/application.properties` para refletir os dados do seu banco:
 
 ```properties
-spring.application.name=TS
-spring.datasource.url=jdbc:postgresql://localhost:5432/TS
-spring.datasource.username=postgres
-spring.datasource.password=admin
+spring.application.name=TS /*Nome do Banco*/
+spring.datasource.url=jdbc:postgresql://localhost:5432/DGC /*Configuração padrão de localhost postgres + Nome do banco*/
+spring.datasource.username=postgres /*Nome de usuário padrão postgres*/
+spring.datasource.password=admin /*Senha criada por você no inicio da criação do banco de dados postgres*/
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 ```
@@ -90,21 +90,29 @@ npm run dev
 ## 📂 Estrutura do Projeto
 
 ```
-TSBackEnd/
-├── src/
-│   └── main/
-│       └── java/com/example/dgc/
-│           └── TSApplication.java
-└── resources/
-        └── application.properties
 
-TSFrontEnd/
-├── node_modules/
-├── public/
-├── src/
-└── package.json
+BackEnd:
 
-SQL/
-└── DDL.sql
+   TSBackEnd/
+   ├── src/
+   │   └── main/
+   │       └── java/com/example/dgc/
+   │           └── TSApplication.java
+   └── resources/
+           └── application.properties
+
+FrontEnd:
+
+   src/
+   └── app/
+       ├── Components/
+       ├── ERP/
+       ├── auth/
+       ├── css/
+       ├── pages/
+       ├── layout.jsx
+       ├── not-found.jsx
+       └── ... (outros arquivos e pastas)
+
 ```
 
