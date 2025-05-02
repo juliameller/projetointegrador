@@ -90,7 +90,6 @@ npm run dev
 ## 📂 Estrutura do Projeto
 
 ```
-
 BackEnd:
 
    TSBackEnd/
