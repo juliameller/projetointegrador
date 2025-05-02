@@ -89,22 +89,61 @@ const ServicosDataTable = () => {
         }
     };
 
+    const [modalType, setModalType] = useState('editar');
     const columns = useMemo(
         () => [
-            { Header: 'Nome', accessor: 'nome' },
-            { Header: 'Duração', accessor: 'duracao' },
-            { Header: 'Valor', accessor: 'valor' },
+            {
+                Header: 'Nome',
+                accessor: 'nome',
+            },
+            {
+                Header: 'Duração',
+                accessor: 'duracao',
+                Cell: ({ value }) => {
+                    // Garante que está no formato hh:mm
+                    if (!value) return '';
+                    const [horas, minutos] = value.split(':');
+                    const hh = horas.padStart(2, '0');
+                    const mm = minutos.padStart(2, '0');
+                    return `${hh}:${mm}h`;
+                },
+            },
+            {
+                Header: 'Valor',
+                accessor: 'valor',
+                Cell: ({ value }) =>
+                    value !== undefined && value !== null
+                        ? `R$ ${parseFloat(value).toFixed(2).replace('.', ',')}`
+                        : 'R$ 0,00',
+            },
             {
                 Header: 'Ações',
                 accessor: 'acoes',
                 Cell: ({ row }) => (
-                    <button
-                        onClick={() => openEditModal(row.original)}
-                        className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"
-                    >
-                        Editar
-                    </button>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => {
+                                setModalType('visualizar');
+                                openEditModal(row.original);
+                            }}
+                            className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"
+                            title="Visualizar"
+                        >
+                            👁
+                        </button>
+                        <button
+                            onClick={() => {
+                                setModalType('editar');
+                                openEditModal(row.original);
+                            }}
+                            className="text-white bg-blue-900 hover:bg-indigo-400 rounded px-2 py-1"
+                            title="Editar"
+                        >
+                            🖊
+                        </button>
+                    </div>
                 ),
+            
             },
         ],
         []
@@ -117,7 +156,9 @@ const ServicosDataTable = () => {
             {isEditModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
-                        <h2 className="title text-center">Editar Serviço</h2>
+                    <h2 className="title text-center">
+                        {modalType === 'visualizar' ? 'Visualizar Serviço' : 'Editar Serviço'}
+                    </h2>
                         <ServiceForm
                             handleSubmit={handleEditSubmit}
                             handleChange={(e) =>
@@ -129,15 +170,17 @@ const ServicosDataTable = () => {
                             formData={selectedServico}
                         />
                         <div className="flex justify-between mt-4">
-                            <button
-                                onClick={handleEditSubmit}
-                                className="Action bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2"
-                            >
-                                Salvar Edição
-                            </button>
                             <button onClick={closeEditModal} className="Action bg-gray-500 hover:bg-gray-600 text-white rounded px-4 py-2">
                                 Cancelar
                             </button>
+                            {modalType !== 'visualizar' && (
+                                <button
+                                    onClick={handleEditSubmit}
+                                    className="Action bg-green-500 hover:bg-green-600 text-white rounded px-4 py-2"
+                                >
+                                    Salvar Edição
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

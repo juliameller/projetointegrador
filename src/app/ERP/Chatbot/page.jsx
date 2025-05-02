@@ -28,7 +28,7 @@ function Chatbot() {
             <div className="chat-container flex flex-col flex-1 p-4">
                 <div id="chat-window" className="chat-box">
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-2 text-white">
+                        <div key={index} className="mb-2">
                             {msg.text}
                         </div>
                     ))}
@@ -46,7 +46,7 @@ function Chatbot() {
                             onChange={(e) => setInput(e.target.value)}
                             className="flex-1 p-2 rounded-l-lg bg-white text-black"
                         />
-                        <button id="send-button" type="submit" className="p-2 bg-blue-700 text-white rounded-r-lg">
+                        <button id="send-button" type="submit" className="p-2 bg-blue-700 rounded-r-lg">
                             Enviar
                         </button>
                     </form>

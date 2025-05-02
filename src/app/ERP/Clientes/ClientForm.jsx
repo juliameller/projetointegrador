@@ -58,14 +58,14 @@ const ClienteForm = ({ handleSubmit, handleChange, formData = {}, formErrors = {
                 />
             </div>
             <div>
-                <label className="formlabel">CPF</label>
+                <label className="formlabel">CPF/CNPJ</label>
                 <input
                     type="text"
                     name="cpf"
                     value={formData.cpf || ''}
                     onChange={handleChange}
                     className={`Custom-input ${formErrors.cpf ? 'border-red-500' : ''}`}
-                    placeholder="Digite o CPF"
+                    placeholder="Digite o CPF/CNPJ"
                     required
                 />
                 {formErrors.cpf && <p className="text-red-500 text-sm">{formErrors.cpf}</p>}

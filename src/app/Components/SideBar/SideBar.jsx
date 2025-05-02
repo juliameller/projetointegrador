@@ -14,7 +14,7 @@ const Sidebar = () => {
         <div className='p-2 align-middle'>
             <div className="bg-blue-900 w-50 h-[calc(100vh-20px)] p-4 rounded-3xl shadow-lg flex">
                 <div className="flex flex-col h-full">
-                <span className="font-bold font-orbitron text-4xl text-black">T-Solution</span>
+                <span className="font-bold font-orbitron text-3xl text-white">T-Solution</span>
                     <div className="flex flex-col gap-4 flex-1 justify-center" name="options">
                         <Link href="/ERP/Agendamento" className={`menu-item ${pathname === '/ERP/Agendamento' ? 'active' : ''}`}>
                             <FaCalendarAlt className="icon" />
