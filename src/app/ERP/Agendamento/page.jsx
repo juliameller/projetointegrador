@@ -138,9 +138,19 @@ function Agendamento() {
         }
     };
 
-    const handleSelecionarAtividades = (atividadesSelecionadas) => {
-        setEventosFiltrados(atividadesSelecionadas);
-    };
+    const handleSelecionarAtividades = (filtros) => {
+        const { servicos: servicosSelecionados, clientes: clientesSelecionados } = filtros;
+    
+        const filtrados = eventos.filter(evento => {
+            const clienteOK = clientesSelecionados.length === 0 || clientesSelecionados.includes(evento.resource.clienteNome);
+            const servicoOK = servicosSelecionados.length === 0 || evento.resource.servicos?.some(servico =>
+                servicosSelecionados.includes(servico.nome)
+            );
+            return clienteOK && servicoOK;
+        });
+    
+        setEventosFiltrados(filtrados);
+    };       
 
     const handleOnChangeView = (selectedView) => {
         setView(selectedView);
