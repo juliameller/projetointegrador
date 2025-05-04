@@ -1,6 +1,23 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Table from '../Table.jsx';
-const DataTable = () => {
+
+const DataTable = ({ searchQuery }) => {
+    const [clientes, setClientes] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/cliente');
+                const data = await response.json();
+                setClientes(data);
+            } catch (error) {
+                console.error('Erro ao buscar clientes:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const columns = useMemo(
         () => [
             {
@@ -8,8 +25,8 @@ const DataTable = () => {
                 accessor: 'id',
             },
             {
-                Header: 'Name',
-                accessor: 'name',
+                Header: 'Nome',
+                accessor: 'nome',
             },
             {
                 Header: 'Email',
@@ -19,18 +36,16 @@ const DataTable = () => {
         []
     );
 
-    const dataTable = useMemo(
-        () => [
-            { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
-            { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com' },
-        ],
-        []
-    );
+    const filteredData = useMemo(() => {
+        return clientes.filter(cliente =>
+            cliente.nome.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [clientes, searchQuery]);
 
     return (
         <div className="mb-8">
-            <h2 className="formlabel">Proximos Agendamentos</h2>
-            <Table columns={columns} data={dataTable} />
+            <h2 className="formlabel">Clientes</h2>
+            <Table columns={columns} data={filteredData} />
         </div>
     );
 };

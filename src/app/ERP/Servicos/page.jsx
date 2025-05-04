@@ -82,7 +82,7 @@ const Servicos = () => {
                     <h1 className="title">Serviços</h1>
                     <div className="flex items-center justify-between">
                         <button onClick={openModal} className="border border-blue-500 bg-white rounded-lg px-3 py-2 text-gray-700 hover:bg-blue-100"> Novo Serviço </button>
-                        <SearchBar placeholder="Pesquisar Serviço..." />
+                        
                     </div>
                     <DataTable />
                 </div>

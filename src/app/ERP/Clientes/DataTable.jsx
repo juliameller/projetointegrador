@@ -8,6 +8,8 @@ const DataTable = () => {
     const [selectedCliente, setSelectedCliente] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState(''); // Estado da pesquisa
+    const [modalType, setModalType] = useState('editar');
 
     useEffect(() => {
         const fetchClientes = async () => {
@@ -43,7 +45,6 @@ const DataTable = () => {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault();
-
         const clienteId = selectedCliente.id_cliente || selectedCliente.id;
 
         if (!clienteId) {
@@ -70,7 +71,6 @@ const DataTable = () => {
             errors.telefone = 'Telefone inválido';
         }
 
-        // Valida se CPF (11 dígitos) ou CNPJ (14 dígitos)
         if (cleanCPF && !/^(\d{11}|\d{14})$/.test(cleanCPF)) {
             errors.cpf = 'CPF ou CNPJ inválido';
         }
@@ -82,7 +82,6 @@ const DataTable = () => {
 
         try {
             const parsedClienteId = Number(clienteId);
-
             const clientePayload = {
                 id_cliente: parsedClienteId,
                 nome: selectedCliente.nome,
@@ -144,7 +143,6 @@ const DataTable = () => {
         return doc;
     };
 
-    const [modalType, setModalType] = useState('editar');
     const columns = useMemo(
         () => [
             { Header: 'Nome', accessor: 'nome' },
@@ -183,22 +181,46 @@ const DataTable = () => {
                             🖊
                         </button>
                     </div>
-
                 ),
             },
         ],
         []
     );
 
+    // 🔍 Filtrando com base na pesquisa
+    const filteredClientes = useMemo(() => {
+        if (!searchQuery) return clientes;
+        const lower = searchQuery.toLowerCase();
+
+        return clientes.filter(cliente =>
+            cliente.nome?.toLowerCase().includes(lower) ||
+            cliente.email?.toLowerCase().includes(lower) ||
+            cliente.cpf?.toLowerCase().includes(lower) ||
+            cliente.telefone?.toLowerCase().includes(lower)
+        );
+    }, [clientes, searchQuery]);
+
     return (
         <>
-            <Table key={clientes.length} columns={columns} data={clientes} />
+            <div className="flex items-center justify-end w-full space-x-4">
+            {/* Barra de pesquisa */}
+            <input
+                type="text"
+                placeholder="Pesquisar cliente..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="px-4 py-2 border-2 border-blue-500 rounded-lg"
+            />     
+            </div>
+            {/* Tabela com dados filtrados */}
+            <Table key={filteredClientes.length} columns={columns} data={filteredClientes} />
+
             {isEditModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
-                    <h2 className="title text-center">
-                        {modalType === 'visualizar' ? 'Visualizar Cliente' : 'Editar Cliente'}
-                    </h2>
+                        <h2 className="title text-center">
+                            {modalType === 'visualizar' ? 'Visualizar Cliente' : 'Editar Cliente'}
+                        </h2>
                         <ClienteForm
                             handleSubmit={handleEditSubmit}
                             handleChange={(e) =>
@@ -226,6 +248,7 @@ const DataTable = () => {
                     </div>
                 </div>
             )}
+
             {isSuccessModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">

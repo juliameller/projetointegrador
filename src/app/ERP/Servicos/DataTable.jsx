@@ -6,6 +6,7 @@ const ServicosDataTable = () => {
     const [servicos, setServicos] = useState([]);
     const [selectedServico, setSelectedServico] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState(''); // Estado de pesquisa
 
     useEffect(() => {
         const fetchServicos = async () => {
@@ -69,7 +70,6 @@ const ServicosDataTable = () => {
             console.error("Erro ao enviar os dados editados:", error);
         }
     };
-    
 
     const confirmDelete = async () => {
         try {
@@ -90,6 +90,12 @@ const ServicosDataTable = () => {
     };
 
     const [modalType, setModalType] = useState('editar');
+    
+    // Filtrando os serviços com base na pesquisa
+    const filteredServicos = servicos.filter(servico =>
+        servico.nome.toLowerCase().includes(searchQuery.toLowerCase()) // Pode filtrar por outros campos
+    );
+
     const columns = useMemo(
         () => [
             {
@@ -100,7 +106,6 @@ const ServicosDataTable = () => {
                 Header: 'Duração',
                 accessor: 'duracao',
                 Cell: ({ value }) => {
-                    // Garante que está no formato hh:mm
                     if (!value) return '';
                     const [horas, minutos] = value.split(':');
                     const hh = horas.padStart(2, '0');
@@ -143,7 +148,6 @@ const ServicosDataTable = () => {
                         </button>
                     </div>
                 ),
-            
             },
         ],
         []
@@ -151,7 +155,20 @@ const ServicosDataTable = () => {
 
     return (
         <>
-            <Table columns={columns} data={servicos} />
+            {/* Barra de Pesquisa */}
+            <div className="mb-8 flex justify-end items-center gap-4">
+                <input
+                    type="text"
+                    placeholder="Pesquisar serviço..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="px-4 py-2 border-2 border-blue-500 rounded-lg "
+                />
+            </div>
+
+            {/* Tabela de Serviços */}
+            <Table columns={columns} data={filteredServicos} />
+
             {/* Modal de Edição */}
             {isEditModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

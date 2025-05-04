@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Sidebar from '../../Components/SideBar/SideBar.jsx';
 import SearchBar from '../../Components/SearchBar/SearchBar.jsx';
 import DataTable from './DataTable.jsx';
-import ClienteForm from './ClientForm'; // Certifique-se de que o caminho está correto
+import ClienteForm from './ClientForm'; 
 
 const Clientes = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +12,7 @@ const Clientes = () => {
     const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
     const [isFormDirty, setIsFormDirty] = useState(false);
     const [formErrors, setFormErrors] = useState({});
+    const [searchQuery, setSearchQuery] = useState("");
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -24,6 +25,11 @@ const Clientes = () => {
         email: '',
         veiculo: ''
     });
+
+
+    const handleSearchChange = (newSearchQuery) => {
+        setSearchQuery(newSearchQuery); // Atualiza o estado com o valor da pesquisa
+    };
 
     const openSuccessModal = () => {
         setIsSuccessModalOpen(true);
@@ -115,16 +121,17 @@ const Clientes = () => {
     };
 
     return (
-        <div className="flex max-h-screen">
-            <Sidebar />
-            <div className="flex-1 p-3">
-                <div className="formcontainer">
-                    <h1 className="title">Clientes</h1>
-                    <div className="flex items-center justify-between">
+            <div className="flex max-h-screen">
+                <Sidebar />
+                <div className="flex-1 p-3">
+                    <div className="formcontainer">
+                        <h1 className="title">Clientes</h1>
+
+                        {/* Contêiner para o botão Novo Serviço e a barra de pesquisa */}
+                        <div className="flex items-center justify-between gap-4">
                         <button onClick={openModal} className="border border-blue-500 bg-white rounded-lg px-3 py-2 text-gray-700 hover:bg-blue-100"> Novo Serviço </button>
-                        <SearchBar placeholder="Pesquisar Cliente..." />
                     </div>
-                    <DataTable  />
+                    <DataTable searchQuery={searchQuery}  />
                 </div>
             </div>
 
