@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@nextui-org/theme": "^2.1.18",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
