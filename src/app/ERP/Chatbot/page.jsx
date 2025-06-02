@@ -6,7 +6,7 @@ import Sidebar from '../../Components/SideBar/SideBar.jsx';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "./chatbot.css";
 
-const API_KEY = 'AIzaSyCK-MxTLNAI3RJPYitUNtDyI1poIObbWpA'; // SUBSTITUA CONFORME A CRIAÇÃO DE CADA CHAVE DE API NOVA
+const API_KEY = 'AIzaSyCK-MxTLNAI3RJPYitUNtDyI1poIObbWpA'; // SUA CHAVE
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 function Chatbot() {
@@ -21,9 +21,8 @@ function Chatbot() {
                 const response = await axios.get('http://localhost:8080/agendamento');
                 const dados = response.data.map(ag => ({
                     cliente: ag.clienteNome,
-                    servico: ag.servicos.nome,
-                    inicio: new Date(ag.dataInicial).toLocaleString('pt-BR'),
-                    fim: new Date(ag.dataFinal).toLocaleString('pt-BR')
+                    inicio: new Date(ag.dataInicial),
+                    fim: new Date(ag.dataFinal)
                 }));
                 setAgendamentos(dados);
             } catch (error) {
@@ -42,6 +41,39 @@ function Chatbot() {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const filtrarAgendamentosPorMes = (lista, texto) => {
+        const meses = {
+            janeiro: 0, fevereiro: 1, março: 2, abril: 3, maio: 4, junho: 5,
+            julho: 6, agosto: 7, setembro: 8, outubro: 9, novembro: 10, dezembro: 11
+        };
+        const textoLower = texto.toLowerCase();
+        const hoje = new Date();
+        let mes = null;
+        let ano = hoje.getFullYear();
+
+        for (let nome in meses) {
+            if (textoLower.includes(nome)) {
+                mes = meses[nome];
+                break;
+            }
+        }
+
+        if (textoLower.includes("esse mês") || textoLower.includes("este mês")) {
+            mes = hoje.getMonth();
+        }
+
+        if (textoLower.includes("próximo mês")) {
+            mes = (hoje.getMonth() + 1) % 12;
+            if (mes === 0) ano += 1;
+        }
+
+        if (mes === null) return lista;
+
+        return lista.filter(ag =>
+            ag.inicio.getMonth() === mes && ag.inicio.getFullYear() === ano
+        );
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -55,20 +87,23 @@ function Chatbot() {
         setMessages(prev => [...prev, userMessage]);
         setInput('');
 
-        const contextoAgendamentos = agendamentos.map(ag =>
-            `Cliente: ${ag.cliente}, Serviço: ${ag.servico}, Início: ${ag.inicio}, Fim: ${ag.fim}`
+        const agFiltrados = filtrarAgendamentosPorMes(agendamentos, input);
+
+        const contextoAgendamentos = agFiltrados.map(ag =>
+            `Cliente: ${ag.cliente}, Início: ${ag.inicio.toLocaleString('pt-BR')}, Fim: ${ag.fim.toLocaleString('pt-BR')}`
         ).join('\n');
 
         const prompt = `
-Você é um assistente de uma mecânica móvel. Com base nos agendamentos abaixo, responda de forma clara à minha pergunta levando em consideração os dados que tenho em meu banco:
+            Você é um assistente de uma mecânica móvel. Seu papel é ajudar o usuário a entender os dados de agendamentos, serviços e clientes da empresa com base nas informações extraídas do banco.
 
-Agendamentos:
-${contextoAgendamentos}
+            Responda de forma clara, direta e amigável. Use os agendamentos abaixo (já filtrados) para responder à pergunta:
 
-Pergunta: ${input}
+            ${contextoAgendamentos || 'Nenhum agendamento correspondente foi encontrado.'}
+
+            Pergunta: ${input}
         `.trim();
 
-        console.log("PROMPT ENVIADO PARA GEMINI:\n", prompt); // debug
+        console.log("PROMPT ENVIADO PARA GEMINI:\n", prompt);
 
         try {
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -85,7 +120,11 @@ Pergunta: ${input}
     return (
         <div className="flex">
             <Sidebar />
-            <div className="chat-container flex flex-col flex-1 p-4">
+            <div className="chat-container">
+                <div className="chat-header">
+                <span style={{ fontSize: '20px' }}>🔧</span>
+                Assistente Virtual T-Solution
+            </div>
                 <div id="chat-window" className="chat-box">
                     {messages.map((msg, index) => (
                         <div key={index} className={`mb-2 ${msg.sender}`}>
@@ -106,7 +145,7 @@ Pergunta: ${input}
                             onChange={(e) => setInput(e.target.value)}
                             className="flex-1 p-2 rounded-l-lg bg-white text-black"
                         />
-                        <button type="submit" className="p-2 bg-blue-700 rounded-r-lg">
+                        <button type="submit" className="p-2 bg-blue-600 rounded-r-lg">
                             Enviar
                         </button>
                     </form>
