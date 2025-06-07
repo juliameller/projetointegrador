@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PopUpDescartar from '../../../Components/PopUp/PopUpDescartar';
 import axios from 'axios';
 
 const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     const [editedEvent, setEditedEvent] = useState({ ...evento });
     const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (evento) {
+          setEditedEvent({
+            ...evento,
+            start: new Date(evento.start),
+            end: new Date(evento.end)
+          });
+        }
+      }, [evento]);
+      
 
     console.log('Evento selecionado no modal:', editedEvent.resource);
 
@@ -14,29 +25,80 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     };
 
     const handleStartDateChange = (e) => {
-        const startDate = new Date(e.target.value);
-        if (startDate <= new Date(editedEvent.end)) {
-            setEditedEvent({ ...editedEvent, start: startDate });
-        }
-    };
+        const currentStart = new Date(editedEvent.start);
+        const [year, month, day] = e.target.value.split('-');
+        const newStart = new Date(currentStart);
+        newStart.setFullYear(year, month - 1, day);
+    
+        setEditedEvent(prev => ({ ...prev, start: newStart }));
+    };    
 
     const handleEndDateChange = (e) => {
-        const endDate = new Date(e.target.value);
-        if (endDate >= new Date(editedEvent.start)) {
-            setEditedEvent({ ...editedEvent, end: endDate });
-        }
+        const currentEnd = new Date(editedEvent.end);
+        const [year, month, day] = e.target.value.split('-');
+        const newEnd = new Date(currentEnd);
+        newEnd.setFullYear(year, month - 1, day);
+    
+        setEditedEvent(prev => ({ ...prev, end: newEnd }));
+    };    
+
+    const handleStartTimeChange = (e) => {
+        const currentStart = new Date(editedEvent.start);
+        const [hour, minute] = e.target.value.split(':');
+        const newStart = new Date(currentStart);
+        newStart.setHours(hour, minute);
+    
+        setEditedEvent(prev => ({ ...prev, start: newStart }));
     };
+    
+    const handleEndTimeChange = (e) => {
+        const currentEnd = new Date(editedEvent.end);
+        const [hour, minute] = e.target.value.split(':');
+        const newEnd = new Date(currentEnd);
+        newEnd.setHours(hour, minute);
+        setEditedEvent(prev => ({ ...prev, end: newEnd }));
+    };
+    
+    
+
+    // const handleUpdate = () => {
+    //     onUpdate(editedEvent);
+    //     onClose();
+    // };
 
     const handleUpdate = () => {
-        onUpdate(editedEvent);
+        // if (!editedEvent.id && editedEvent.resource?.id) {
+        //     editedEvent.id = editedEvent.resource.id; 
+        // }
+
+        const servicosArray = editedEvent.resource?.servicos || [];
+        const idsServicos = servicosArray.map(s => s.idServico); 
+
+    
+        // Mapear campos para o formato que backend espera
+        const eventToUpdate = {
+            id: editedEvent.id || editedEvent.resource?.id,
+            id_cliente: editedEvent.resource.idCliente,
+            id_servicos: idsServicos,
+            dataInicial: editedEvent.start,
+            dataFinal: editedEvent.end,
+            status: editedEvent.status || 1,
+            // observacoes: editedEvent.observacoes || '',
+        };
+    
+        onUpdate(eventToUpdate);
         onClose();
     };
+    
 
     const adjustDate = (date) => {
+        if (!date) return '';
         const adjustedDate = new Date(date);
+        if (isNaN(adjustedDate)) return '';
         adjustedDate.setHours(adjustedDate.getHours() - 3);
         return adjustedDate.toISOString().slice(0, 19);
     };
+    
 
     const handleEventDelete = async (event) => {
         try {
@@ -91,12 +153,22 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                     </div>
                     <div className="mb-4 flex justify-between">
                         <div className="w-1/2 pr-2">
-                            <label className="formlabel block text-gray-700">Data:</label>
+                            <label className="formlabel block text-gray-700">Data Inicial:</label>
                             <input
                                 type="date"
                                 name="date"
                                 value={adjustDate(editedEvent.start).slice(0, 10)}
                                 onChange={handleStartDateChange}
+                                className="mt-1 w-full border rounded px-3 py-2"
+                            />
+                        </div>
+                        <div className="w-1/2 pr-2">
+                            <label className="formlabel block text-gray-700">Data Final:</label>
+                            <input
+                                type="date"
+                                name="date"
+                                value={editedEvent.end ? new Date(editedEvent.end).toISOString().slice(0, 10) : ''}
+                                onChange={handleEndDateChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
                         </div>
@@ -106,7 +178,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                                 type="time"
                                 name="start"
                                 value={adjustDate(editedEvent.start).slice(11, 16)}
-                                onChange={handleStartDateChange}
+                                onChange={handleStartTimeChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
                         </div>
@@ -116,7 +188,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                                 type="time"
                                 name="end"
                                 value={adjustDate(editedEvent.end).slice(11, 16)}
-                                onChange={handleEndDateChange}
+                                onChange={handleEndTimeChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
                         </div>

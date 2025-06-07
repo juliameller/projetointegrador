@@ -129,7 +129,7 @@ const Clientes = () => {
 
                         {/* Contêiner para o botão Novo Serviço e a barra de pesquisa */}
                         <div className="flex items-center justify-between gap-4">
-                        <button onClick={openModal} className="border border-blue-500 bg-white rounded-lg px-3 py-2 text-gray-700 hover:bg-blue-100"> Novo Serviço </button>
+                        <button onClick={openModal} className="border border-blue-500 bg-white rounded-lg px-3 py-2 text-gray-700 hover:bg-blue-100"> Novo Cliente </button>
                     </div>
                     <DataTable searchQuery={searchQuery}  />
                 </div>

@@ -104,6 +104,7 @@ public class AgendamentoController {
             );
             return ResponseEntity.ok(agendamento);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         }
     }

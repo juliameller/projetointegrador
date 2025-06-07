@@ -68,12 +68,15 @@ function Agendamento() {
             console.error('Event resource ID is undefined');
             return;
         }
+
+        const id_servicos = event.resource.servicos?.map((s) => s.idServico) || [];
+
         const payload = {
-            id_cliente: event.resource.cliente.id,
-            id_servico: event.resource.servico.idServico,
+            id_cliente: event.resource.idCliente,
+            id_servicos: id_servicos,
             dataInicial: moment(start).format('YYYY-MM-DDTHH:mm:ss'),
             dataFinal: moment(end).format('YYYY-MM-DDTHH:mm:ss'),
-            status: event.resource.status
+            status: event.resource.status,
         };
         console.log('Payload for PUT request:', payload);
         try {
@@ -125,18 +128,25 @@ function Agendamento() {
 
     const handleEventUpdate = async (updatedEvent) => {
         try {
-            await axios.put(`http://localhost:8080/agendamento/${updatedEvent.id}`, {
-                data_inicial: moment(updatedEvent.start).format('YYYY-MM-DDTHH:mm:ss'),
-                data_final: moment(updatedEvent.end).format('YYYY-MM-DDTHH:mm:ss'),
-                id_servico: updatedEvent.resource.servico.id,
-                dataHora: moment(updatedEvent.start).format('YYYY-MM-DDTHH:mm:ss')
-            });
 
+            const payload = {
+                id_cliente: updatedEvent.id_cliente,
+                id_servicos: updatedEvent.id_servicos,
+                dataInicial: moment(updatedEvent.dataInicial || updatedEvent.start).format('YYYY-MM-DDTHH:mm:ss'),
+                dataFinal: moment(updatedEvent.dataFinal || updatedEvent.end).format('YYYY-MM-DDTHH:mm:ss'),
+                status: updatedEvent.status,
+            };
+        
+            console.log('Payload final para PUT:', payload);            
+
+            await axios.put(`http://localhost:8080/agendamento/${updatedEvent.id}`, payload);
+    
             await carregarAgendamentos();
         } catch (error) {
             console.error('Erro ao atualizar evento:', error);
         }
     };
+    
 
     const handleSelecionarAtividades = (filtros) => {
         const { servicos: servicosSelecionados, clientes: clientesSelecionados } = filtros;
