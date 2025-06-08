@@ -9,12 +9,12 @@ import com.example.ts.Servicos.ServicosModel;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "agenda")  // Alterado para usar a tabela agenda
+@Table(name = "agenda")
 public class AgendamentoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_agenda")  // Alterado para id_agenda
+    @Column(name = "id_agenda")
     private Long id;
 
     @ManyToOne
@@ -29,15 +29,17 @@ public class AgendamentoModel {
     )
     private List<ServicosModel> servicos;
 
-    @Column(name = "data_inicial")  // Alterado para usar data_inicial
+    @Column(name = "data_inicial")
     private LocalDateTime dataInicial;
 
-    @Column(name = "data_final")    // Adicionado data_final
+    @Column(name = "data_final")
     private LocalDateTime dataFinal;
 
-    @Column(name = "status")        // Adicionado status
+    @Column(name = "status")
     private Integer status;
 
+    @Column(name = "observacoes")
+    private String observacoes;
 
 
     // Getters e Setters atualizados
@@ -88,4 +90,8 @@ public class AgendamentoModel {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public String getObservacoes() { return observacoes; }
+
+    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 }

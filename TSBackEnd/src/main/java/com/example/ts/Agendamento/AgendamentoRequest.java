@@ -8,6 +8,7 @@ public class AgendamentoRequest {
     private String dataInicial;
     private String dataFinal;
     private Integer status;
+    private String observacoes;
 
     // Construtor vazio é necessário para deserialização
     public AgendamentoRequest() {}
@@ -52,4 +53,8 @@ public class AgendamentoRequest {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public String getObservacoes() { return observacoes; }
+
+    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 }

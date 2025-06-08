@@ -57,7 +57,7 @@ public class AgendamentoService {
         return agendamentoRepository.findAll();
     }
 
-    public AgendamentoModel atualizar(Long id, Long id_cliente, List<Long> id_servicos, LocalDateTime dataInicial, LocalDateTime dataFinal, Integer status) {
+    public AgendamentoModel atualizar(Long id, Long id_cliente, List<Long> id_servicos, LocalDateTime dataInicial, LocalDateTime dataFinal, Integer status, String observacoes) {
         Optional<AgendamentoModel> agendamentoExistente = agendamentoRepository.findById(id);
     
         if (agendamentoExistente.isEmpty()) {
@@ -89,6 +89,7 @@ public class AgendamentoService {
         agendamento.setDataInicial(dataInicial);
         agendamento.setDataFinal(dataFinal);
         agendamento.setStatus(status);
+        agendamento.setObservacoes(observacoes);
     
         return agendamentoRepository.save(agendamento);
     }

@@ -80,6 +80,7 @@ public class AgendamentoController {
             response.setDataInicial(agendamento.getDataInicial());
             response.setDataFinal(agendamento.getDataFinal());
             response.setStatus(agendamento.getStatus());
+            response.setObservacoes(agendamento.getObservacoes());
             return response;
         }).toList();
     }
@@ -100,7 +101,8 @@ public class AgendamentoController {
                 agendamentoRequest.getId_servicos(),
                 dataInicialParsed,
                 dataFinalParsed,
-                agendamentoRequest.getStatus()
+                agendamentoRequest.getStatus(),
+                agendamentoRequest.getObservacoes()
             );
             return ResponseEntity.ok(agendamento);
         } catch (Exception e) {

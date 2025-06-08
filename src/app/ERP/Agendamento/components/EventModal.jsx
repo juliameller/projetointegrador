@@ -83,7 +83,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
             dataInicial: editedEvent.start,
             dataFinal: editedEvent.end,
             status: editedEvent.status || 1,
-            // observacoes: editedEvent.observacoes || '',
+            observacoes: editedEvent.observacoes || '',
         };
     
         onUpdate(eventToUpdate);

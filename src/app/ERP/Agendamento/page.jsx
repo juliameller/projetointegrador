@@ -43,7 +43,8 @@ function Agendamento() {
                     start: startDate,
                     end: endDate,
                     resource: agendamento,
-                    tipo: agendamento.servicos.nome
+                    tipo: agendamento.servicos.nome,
+                    observacoes: agendamento.observacoes
                 };
             });
             
@@ -77,6 +78,7 @@ function Agendamento() {
             dataInicial: moment(start).format('YYYY-MM-DDTHH:mm:ss'),
             dataFinal: moment(end).format('YYYY-MM-DDTHH:mm:ss'),
             status: event.resource.status,
+            observacoes: event.resource.observacoes || '',
         };
         console.log('Payload for PUT request:', payload);
         try {
@@ -135,6 +137,7 @@ function Agendamento() {
                 dataInicial: moment(updatedEvent.dataInicial || updatedEvent.start).format('YYYY-MM-DDTHH:mm:ss'),
                 dataFinal: moment(updatedEvent.dataFinal || updatedEvent.end).format('YYYY-MM-DDTHH:mm:ss'),
                 status: updatedEvent.status,
+                observacoes: updatedEvent.observacoes || ''
             };
         
             console.log('Payload final para PUT:', payload);            
