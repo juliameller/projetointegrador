@@ -78,7 +78,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
         // Mapear campos para o formato que backend espera
         const eventToUpdate = {
             id: editedEvent.id || editedEvent.resource?.id,
-            id_cliente: editedEvent.resource.idCliente,
+            id_cliente: editedEvent.resource.idCliente || editedEvent.resource.cliente.id,
             id_servicos: idsServicos,
             dataInicial: editedEvent.start,
             dataFinal: editedEvent.end,

@@ -45,11 +45,11 @@ INSERT INTO servico (nome, valor, duracao) VALUES
 ('Alinhamento e balanceamento', 400.00, INTERVAL '01:30:00'),
 ('Substituição de embreagem', 2500.00, INTERVAL '06:00:00'),
 ('Troca de pastilhas de freio', 600.00, INTERVAL '02:00:00'),
-('Diagnóstico eletrônico', 300.00, INTERVAL '01:00:00');
--- ('Troca de filtro de ar e combustível', 450.00, INTERVAL '01:30:00'),
--- ('Manutenção do sistema de ar (freio pneumático)', 800.00, INTERVAL '03:00:00'),
--- ('Troca de amortecedores', 950.00, INTERVAL '02:30:00'),
--- ('Troca de correia dentada', 700.00, INTERVAL '02:00:00');
+('Diagnóstico eletrônico', 300.00, INTERVAL '01:00:00'),
+('Troca de filtro de ar e combustível', 450.00, INTERVAL '01:30:00'),
+('Manutenção do sistema de ar (freio pneumático)', 800.00, INTERVAL '03:00:00'),
+('Troca de amortecedores', 950.00, INTERVAL '02:30:00'),
+('Troca de correia dentada', 700.00, INTERVAL '02:00:00');
 
 CREATE TABLE agenda (
   id_agenda SERIAL PRIMARY KEY,
@@ -57,6 +57,7 @@ CREATE TABLE agenda (
   data_inicial TIMESTAMP NOT NULL,
   data_final TIMESTAMP NOT NULL,
   status INTEGER NOT NULL,
+  observacoes VARCHAR(225),
   FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente)
 );
 
