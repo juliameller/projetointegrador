@@ -103,20 +103,11 @@ function Agendamento() {
         setEventoSelecionado(null);
     };
 
-    const handleAdicionar = async (novoEvento) => {
-        try {
-            await axios.post('http://localhost:8080/agendamento', {
-                id_cliente: novoEvento.cliente.id,
-                data_inicial: moment(novoEvento.start).format('YYYY-MM-DDTHH:mm:ss'),
-                data_final: moment(novoEvento.end).format('YYYY-MM-DDTHH:mm:ss'),
-                dataHora: moment(novoEvento.dataHora).format('YYYY-MM-DDTHH:mm:ss')
-            });
+   const handleAdicionar = (eventoAdicionado) => {
+    setEventos(prev => [...prev, eventoAdicionado]);
+    setEventosFiltrados(prev => [...prev, eventoAdicionado]);
+};
 
-            await carregarAgendamentos();
-        } catch (error) {
-            console.error('Erro ao adicionar evento:', error);
-        }
-    };
 
     const handleEventDelete = async (eventId) => {
         try {

@@ -138,7 +138,7 @@ function Adicionar({ onAdicionar }) {
             const responseData = await response.json();
 
             const eventoCalendario = {
-                title: `${novoEvento.cliente.nome} - ${responseData.servicos.map(s => s.nome).join(', ')}`,
+                title: `${novoEvento.cliente.nome}`,
                 start: dataInicial,
                 end: dataFinal,
                 resource: responseData

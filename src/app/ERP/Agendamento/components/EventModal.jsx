@@ -131,7 +131,23 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
+            <div className="relative bg-white rounded-lg shadow-lg p-6 w-1/3">
+                <button
+                onClick={onClose}
+                aria-label="Fechar"
+                style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '0.5rem',
+                    background: 'transparent',
+                    border: 'none',
+                    fontSize: '1.5rem',
+                    cursor: 'pointer',
+                    lineHeight: '1',
+                }}
+                >
+                &times;
+                </button>
                 <h2 className="title text-center">Editar Agendamento</h2>
                 <div className="mt-4">
                     <div className="mb-4">
@@ -217,12 +233,6 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                         Salvar Alterações
                     </button>
                 </div>
-                <button
-                    onClick={onClose}
-                    className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-                >
-                    &times;
-                </button>
             </div>
 
             {isDiscardModalOpen && (
