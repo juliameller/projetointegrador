@@ -43,28 +43,27 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     };    
 
     const handleStartTimeChange = (e) => {
-        const currentStart = new Date(editedEvent.start);
         const [hour, minute] = e.target.value.split(':');
-        const newStart = new Date(currentStart);
-        newStart.setHours(hour, minute);
+        const newStart = new Date(editedEvent.start);
+        newStart.setHours(parseInt(hour), parseInt(minute), 0, 0); // evita bugs com string
     
         setEditedEvent(prev => ({ ...prev, start: newStart }));
     };
     
+    
     const handleEndTimeChange = (e) => {
-        const currentEnd = new Date(editedEvent.end);
         const [hour, minute] = e.target.value.split(':');
-        const newEnd = new Date(currentEnd);
-        newEnd.setHours(hour, minute);
+        const newEnd = new Date(editedEvent.end);
+        newEnd.setHours(parseInt(hour), parseInt(minute), 0, 0);
+    
         setEditedEvent(prev => ({ ...prev, end: newEnd }));
-    };
+    };   
     
-    
-
-    // const handleUpdate = () => {
-    //     onUpdate(editedEvent);
-    //     onClose();
-    // };
+    const formatDateTimeLocal = (date) => {
+        if (!date) return '';
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    };   
 
     const handleUpdate = () => {
         // if (!editedEvent.id && editedEvent.resource?.id) {
@@ -80,8 +79,8 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
             id: editedEvent.id || editedEvent.resource?.id,
             id_cliente: editedEvent.resource.idCliente || editedEvent.resource.cliente.id,
             id_servicos: idsServicos,
-            dataInicial: editedEvent.start,
-            dataFinal: editedEvent.end,
+            dataInicial: formatDateTimeLocal(editedEvent.start),
+            dataFinal: formatDateTimeLocal(editedEvent.end),
             status: editedEvent.status || 1,
             observacoes: editedEvent.observacoes || '',
         };
@@ -91,12 +90,26 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
     };
     
 
-    const adjustDate = (date) => {
+    // const adjustDate = (date) => {
+    //     if (!date) return '';
+    //     const adjustedDate = new Date(date);
+    //     if (isNaN(adjustedDate)) return '';
+    //     return adjustedDate.toISOString().slice(0, 19);
+    // };
+    
+    const formatTimeInput = (date) => {
         if (!date) return '';
-        const adjustedDate = new Date(date);
-        if (isNaN(adjustedDate)) return '';
-        adjustedDate.setHours(adjustedDate.getHours() - 3);
-        return adjustedDate.toISOString().slice(0, 19);
+        const d = new Date(date);
+        return d.toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        });
+    };
+    
+    const formatDateInput = (date) => {
+        if (!date) return '';
+        return new Date(date).toISOString().slice(0, 10);
     };
     
 
@@ -173,7 +186,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="date"
                                 name="date"
-                                value={adjustDate(editedEvent.start).slice(0, 10)}
+                                value={formatDateInput(editedEvent.start)}
                                 onChange={handleStartDateChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
@@ -183,7 +196,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="date"
                                 name="date"
-                                value={editedEvent.end ? new Date(editedEvent.end).toISOString().slice(0, 10) : ''}
+                                value={formatDateInput(editedEvent.end)}
                                 onChange={handleEndDateChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
@@ -193,7 +206,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="time"
                                 name="start"
-                                value={adjustDate(editedEvent.start).slice(11, 16)}
+                                value={formatTimeInput(editedEvent.start)}
                                 onChange={handleStartTimeChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
@@ -203,7 +216,7 @@ const EventModal = ({ evento, onClose, onDelete, onUpdate }) => {
                             <input
                                 type="time"
                                 name="end"
-                                value={adjustDate(editedEvent.end).slice(11, 16)}
+                                value={formatTimeInput(editedEvent.end)}
                                 onChange={handleEndTimeChange}
                                 className="mt-1 w-full border rounded px-3 py-2"
                             />
